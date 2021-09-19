@@ -102,23 +102,56 @@ class _MyHomePageState extends State<MyHomePage> {
                     if (snapshot.data != null) {
                       print(
                           "type of incoming data is ${snapshot.data.runtimeType}");
-                      temp = jsonDecode(snapshot.data as String) as List<dynamic>;
+                      temp =
+                          jsonDecode(snapshot.data as String) as List<dynamic>;
                       if (temp is List<dynamic>) {
-                      print(temp.length);
-                      // y = data;
-                      myWidget = SingleChildScrollView(
-                          // child: Text(snapshot.data.toString(),maxLines: 5, softWrap: true,));
-                          child: Text(
-                              "Time:${DateTime.fromMillisecondsSinceEpoch(temp[0]['E']).hour}:" +
-                                  "${DateTime.fromMillisecondsSinceEpoch(temp[0]['E']).minute}\n"
-                                      "Symbol:${temp[0]['s']}\n" +
-                                  "Pric:${temp[0]['c']}"));
-                    }
+                        print(temp.length);
+                        myWidget = SizedBox(
+                          height: 400,
+                          width: double.infinity,
+                          child: ListView.builder(
+                            itemCount: temp.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              String symbol = "${temp[index]['s']}";
+                              int symbolLength = symbol.length;
+                              // print(symbolLength);
+                              return Card(
+                                margin: EdgeInsets.all(5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text("${symbol.substring(0,symbolLength-3)}/${symbol.substring(symbolLength-3, symbolLength)}",textScaleFactor:1.3,),
+                                          
+                                          Text("${temp[index]['c']}"),
+                                        ]),
+                                      Text("Time:${DateTime.fromMillisecondsSinceEpoch(temp[index]['E']).hour}:" +
+                                              "${DateTime.fromMillisecondsSinceEpoch(temp[index]['E']).minute}"),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                        // y = data;
+                        // myWidget = SingleChildScrollView(
+                        //     // child: Text(snapshot.data.toString(),maxLines: 5, softWrap: true,));
+                        //     child: Text(
+                        //         "Time:${DateTime.fromMillisecondsSinceEpoch(temp[0]['E']).hour}:" +
+                        //             "${DateTime.fromMillisecondsSinceEpoch(temp[0]['E']).minute}\n"
+                        //                 "Symbol:${temp[0]['s']}\n" +
+                        //             "Pric:${temp[0]['c']}"));
+                      }
                     }
                   } catch (e) {
                     print("incoming data mismatch,little wait.....");
                   }
-                  
 
                   return myWidget;
                 })
