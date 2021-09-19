@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void dispose() {
     if (_channel != null) {
       print("Channel closed");
-    _channel!.sink.close();
+      _channel!.sink.close();
     }
     super.dispose();
   }
@@ -94,35 +94,34 @@ class _MyHomePageState extends State<MyHomePage> {
                 builder: (context, snapshot) {
                   Map y = {"name": "Asif"};
                   List temp = [];
+                  Widget myWidget = CircularProgressIndicator();
 
-                  if (snapshot.data != null) {
-                    // final data = jsonDecode(snapshot.data as String) as Map<String, dynamic>;
-                    final temp =  jsonDecode(snapshot.data as String) as List<dynamic>;
-                    
-                    // for (var x in data) {
-                    //   print(x);
-                    // }
-                    // print("Time: $data[E]\n$data[s] price:$data[]");
-                    // temp = snapshot.data as  List<Map>;
+                  // print(snapshot.data);
+                  // final data = jsonDecode(snapshot.data as String) as Map<String, dynamic>;
+                  try {
+                    if (snapshot.data != null) {
+                      print(
+                          "type of incoming data is ${snapshot.data.runtimeType}");
+                      temp = jsonDecode(snapshot.data as String) as List<dynamic>;
+                      if (temp is List<dynamic>) {
+                      print(temp.length);
+                      // y = data;
+                      myWidget = SingleChildScrollView(
+                          // child: Text(snapshot.data.toString(),maxLines: 5, softWrap: true,));
+                          child: Text(
+                              "Time:${DateTime.fromMillisecondsSinceEpoch(temp[0]['E']).hour}:" +
+                                  "${DateTime.fromMillisecondsSinceEpoch(temp[0]['E']).minute}\n"
+                                      "Symbol:${temp[0]['s']}\n" +
+                                  "Pric:${temp[0]['c']}"));
+                    }
+                    }
+                  } catch (e) {
+                    print("incoming data mismatch,little wait.....");
+                  }
+                  
 
-                    print(temp.length);
-                    // y = data;
-                    return SingleChildScrollView(
-                      // child: Text(snapshot.data.toString(),maxLines: 5, softWrap: true,));
-                      child: Text(
-                        "Time:${DateTime.fromMillisecondsSinceEpoch(temp[0]['E'])}\n" +
-                        "Symbol:${temp[0]['s']}\n" +
-                        "Pric:${temp[0]['c']}"
-                      ));
-                  }
-                  else if (snapshot.hasError) {
-                    return CircularProgressIndicator();
-                  }
-                  else 
-                  return SingleChildScrollView(
-                      child: CircularProgressIndicator());
-                
-                  })
+                  return myWidget;
+                })
           ],
         ),
       ),
