@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
           "method": "SUBSCRIBE",
           // "params": ["btcusdt@kline_" + "1m","adausdt@kline_" + "1m"],
           "params": ["!ticker@arr"],
-          "id": 1
+          "id": 23
         },
       ),
     );
@@ -113,34 +113,53 @@ class _MyHomePageState extends State<MyHomePage> {
                             itemCount: temp.length,
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
+                              Widget myCardWidget = SizedBox.shrink();
                               String symbol = "${temp[index]['s']}";
-                              RegExp exp = RegExp(r"^(\w+)(BTC|ETH|BNB|USDT|PAX|TUSD|USDC|XRP|BUSD|USDS)$");
-                              Iterable<RegExpMatch> matches = exp.allMatches(symbol);
-                              print(matches.elementAt(0).group(1));
-                              String baseSymbol = matches.elementAt(0).group(1)!;
-                              String quoteSymbol = matches.elementAt(0).group(2)!;
-                              int symbolLength = symbol.length;
-                              // print(symbolLength);
-                              return Card(
-                                margin: EdgeInsets.all(5),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text("$baseSymbol/$quoteSymbol",textScaleFactor:1.3,),
-                                          
-                                          Text("${temp[index]['c']}"),
-                                        ]),
-                                      Text("Time:${DateTime.fromMillisecondsSinceEpoch(temp[index]['E']).hour}:" +
-                                              "${DateTime.fromMillisecondsSinceEpoch(temp[index]['E']).minute}"),
-                                  ],
-                                ),
-                              );
+                              RegExp exp = RegExp(
+                                  r"^(\w+)(BTC|ETH|BNB|USDT|PAX|TUSD|USDC|XRP|BUSD|USDS)$");
+                              Iterable<RegExpMatch> matches =
+                                  exp.allMatches(symbol);
+
+                              if (matches.isNotEmpty) {
+                                print(matches.elementAt(0).group(1));
+                                String baseSymbol =
+                                    matches.elementAt(0).group(1)!;
+                                String quoteSymbol =
+                                    matches.elementAt(0).group(2)!;
+                                if (quoteSymbol == "BTC" ||
+                                    quoteSymbol == "ETH" ||
+                                    quoteSymbol == "BNB" ||
+                                    quoteSymbol == "PAX" ||
+                                    quoteSymbol == "XRP") {
+                                } else {
+                                  myCardWidget= Card(
+                                    margin: EdgeInsets.all(5),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "$baseSymbol/$quoteSymbol",
+                                                textScaleFactor: 1.3,
+                                              ),
+                                              Text("${temp[index]['c']}"),
+                                            ]),
+                                        Text("Time:${DateTime.fromMillisecondsSinceEpoch(temp[index]['E']).hour}:" +
+                                            "${DateTime.fromMillisecondsSinceEpoch(temp[index]['E']).minute}"),
+                                      ],
+                                    ),
+                                  );
+                                }
+                              }
+                             return myCardWidget; // print(symbolLength);
                             },
                           ),
                         );
