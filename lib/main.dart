@@ -3,6 +3,22 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+
+extension SortBy on List {
+  sortBy(List<String> keys) {
+    this.sort((a, b) {
+      for(int k=0; k<keys.length; k++) {
+        String key = keys[k];
+        int comparison = Comparable.compare((a[key]??""), (b[key]??""));
+        if(comparison != 0){
+          return comparison;
+        }
+      }
+      return 0;
+    });
+  }
+}
+
 void main() {
   runApp(MyApp());
 }
@@ -105,7 +121,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       temp =
                           jsonDecode(snapshot.data as String) as List<dynamic>;
                       if (temp is List<dynamic>) {
-                        print(temp.length);
+                        // print(temp.toString());
+                        // print(temp.length);
+                        temp.sortBy(['c']);
                         myWidget = SizedBox(
                           height: 400,
                           width: double.infinity,
@@ -121,7 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   exp.allMatches(symbol);
 
                               if (matches.isNotEmpty) {
-                                print(matches.elementAt(0).group(1));
+                                // print(matches.elementAt(0).group(1));
                                 String baseSymbol =
                                     matches.elementAt(0).group(1)!;
                                 String quoteSymbol =
@@ -132,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     quoteSymbol == "PAX" ||
                                     quoteSymbol == "XRP") {
                                 } else {
-                                  myCardWidget= Card(
+                                  myCardWidget = Card(
                                     margin: EdgeInsets.all(5),
                                     child: Column(
                                       crossAxisAlignment:
@@ -159,7 +177,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   );
                                 }
                               }
-                             return myCardWidget; // print(symbolLength);
+                              return myCardWidget; // print(symbolLength);
                             },
                           ),
                         );
