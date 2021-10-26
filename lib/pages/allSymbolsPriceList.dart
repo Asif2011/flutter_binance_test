@@ -1,23 +1,10 @@
 import 'dart:convert';
-
+import '../utils/computation.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 
-extension SortBy on List {
-  sortBy(List<String> keys) {
-    this.sort((a, b) {
-      for(int k=0; k<keys.length; k++) {
-        String key = keys[k];
-        int comparison = Comparable.compare((a[key]??""), (b[key]??""));
-        if(comparison != 0){
-          return comparison;
-        }
-      }
-      return 0;
-    });
-  }
-}
+
 
 
 class MyHomePage extends StatefulWidget {
@@ -109,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   r"^(\w+)(BTC|ETH|BNB|USDT|PAX|TUSD|USDC|XRP|BUSD|USDS)$");
                               Iterable<RegExpMatch> matches =
                                   exp.allMatches(symbol);
-
+                                
                               if (matches.isNotEmpty) {
                                 // print(matches.elementAt(0).group(1));
                                 String baseSymbol =

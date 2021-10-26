@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_binance_test/pages/RSIPage.dart';
-import 'package:flutter_binance_test/pages/allSymbols.dart';
+import 'package:flutter_binance_test/pages/allSymbolsPriceList.dart';
 import 'package:flutter_binance_test/routes.dart';
 
 
@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
         // MyRoutes.homeRoute: (context){return HomeScreen();},
         // MyRoutes.catalogRoute:(context){return CatalogScreen();}
       },
-      home: MyHomePage(title: 'RSI'),
+      // home: MyHomePage(title: 'RSI'),
     );
   }
 }
