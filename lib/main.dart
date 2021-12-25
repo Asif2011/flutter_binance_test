@@ -23,7 +23,7 @@ extension SortBy on List {
 }
 
 void main() {
-  runApp(MyApp());
+  runApp(MyApp());  
 }
 
 class MyApp extends StatelessWidget {
@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
       initialRoute:AppRoutes.RSIRoute,
       routes:{
         AppRoutes.PricesRoute:(context){return MyHomePage(title: "Flutter Binance RSI");},
-         AppRoutes.RSIRoute:(context){return RSI();}
+         AppRoutes.RSIRoute:(context){return RSI();},
         // MyRoutes.loginRoute:(context){return LoginScreen();},
         // MyRoutes.homeRoute: (context){return HomeScreen();},
         // MyRoutes.catalogRoute:(context){return CatalogScreen();}
@@ -60,6 +60,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-
