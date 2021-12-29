@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_binance_test/pages/RSIPage.dart';
 import 'package:flutter_binance_test/pages/allSymbolsPriceList.dart';
+import 'package:flutter_binance_test/pages/background_task.dart';
 import 'package:flutter_binance_test/routes.dart';
 
 
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
       routes:{
         AppRoutes.PricesRoute:(context){return MyHomePage(title: "Flutter Binance RSI");},
          AppRoutes.RSIRoute:(context){return RSI();},
+         AppRoutes.BackgroundTaskRoute:(context){return BackgroundServiceTest();},
         // MyRoutes.loginRoute:(context){return LoginScreen();},
         // MyRoutes.homeRoute: (context){return HomeScreen();},
         // MyRoutes.catalogRoute:(context){return CatalogScreen();}
